@@ -1,23 +1,33 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const inputs = document.getElementsByTagName("input");
+const passwordInput = document.querySelector("#password");
+const passwordConfirmInput = document.querySelector("#confirm-password");
+const errorMessage = document.querySelector(".error-message");
 
-setupCounter(document.querySelector('#counter'))
+for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("blur", function () {
+        if (!inputs[i].validity.valid) {
+            inputs[i].classList.add("border-red-600");
+        } else if (inputs[i].validity.valid) {
+            inputs[i].classList.add("border-green-600");
+        } else {
+            inputs[i].classList.remove("border-red-600");
+        }
+    });
+}
+
+function validatePassword() {
+  if (passwordInput.value !== passwordConfirmInput.value) {
+    passwordInput.classList.add("border-red-600");
+    passwordConfirmInput.classList.add("border-red-600");
+    errorMessage.classList.remove("hidden");
+  } else {
+    passwordInput.classList.remove("border-red-600");
+    passwordConfirmInput.classList.remove("border-red-600");
+    errorMessage.classList.add("hidden");
+  }
+}
+
+passwordConfirmInput.addEventListener("blur", validatePassword);
+passwordInput.addEventListener("input", validatePassword);
