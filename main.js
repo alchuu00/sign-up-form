@@ -1,5 +1,3 @@
-import './style.css'
-
 const inputs = document.getElementsByTagName("input");
 const passwordInput = document.querySelector("#password");
 const passwordConfirmInput = document.querySelector("#confirm-password");
